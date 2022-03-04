@@ -44,11 +44,11 @@ class SimpleWizardQuestionView extends StatelessWidget {
                   ),
                   child: Text(answer.text),
                   onPressed: () {
-                    instance.controller.animateToPage(
-                      ++instance.currentPage,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.ease,
-                    );
+                    if (answer.skipToStep != null) {
+                      instance.GoTo(answer.skipToStep!);
+                    } else {
+                      instance.Next();
+                    }
                   },
                 ),
               );
@@ -73,11 +73,7 @@ class SimpleWizardQuestionView extends StatelessWidget {
                 ),
                 child: const Text("Back"),
                 onPressed: () {
-                  instance.controller.animateToPage(
-                    --instance.currentPage,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.ease,
-                  );
+                  instance.Back();
                 },
               ),
             ),
@@ -127,13 +123,8 @@ class SimpleWizardFinishView extends StatelessWidget {
               ),
               child: const Text("Close"),
               onPressed: () {
-                instance.currentPage = 0;
-
-                instance.controller.animateToPage(
-                  instance.currentPage,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.ease,
-                );
+                instance.previousSteps.clear();
+                instance.GoTo("question_1");
               },
             ),
           ],

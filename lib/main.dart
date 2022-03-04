@@ -40,20 +40,61 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: SimpleWizard(steps: [
-        ModelSimpleWizardStepQuestion(answers: [
-          ModelSimpleWizardStepAnswer(text: "This"),
-          ModelSimpleWizardStepAnswer(text: "That"),
-          ModelSimpleWizardStepAnswer(text: "Other"),
-        ]),
-        ModelSimpleWizardStepQuestion(answers: [
-          ModelSimpleWizardStepAnswer(text: "This"),
-          ModelSimpleWizardStepAnswer(text: "That"),
-        ]),
-        ModelSimpleWizardStepQuestion(answers: [
-          ModelSimpleWizardStepAnswer(text: "This"),
-          ModelSimpleWizardStepAnswer(text: "That"),
-        ]),
-        ModelSimpleWizardFinish()
+        ModelSimpleWizardStepQuestion(
+          id: "question_1",
+          text: "Question 1",
+          answers: [
+            ModelSimpleWizardStepAnswer(text: "This"),
+            ModelSimpleWizardStepAnswer(text: "That"),
+            ModelSimpleWizardStepAnswer(
+              text: "Skip to 3",
+              skipToStep: "question_3",
+            ),
+          ],
+        ),
+        ModelSimpleWizardStepQuestion(
+          id: "question_2",
+          text: "Question 2",
+          answers: [
+            ModelSimpleWizardStepAnswer(text: "This"),
+            ModelSimpleWizardStepAnswer(text: "That"),
+          ],
+        ),
+        ModelSimpleWizardStepQuestion(
+          id: "question_3",
+          text: "Question 3",
+          answers: [
+            ModelSimpleWizardStepAnswer(text: "This"),
+            ModelSimpleWizardStepAnswer(text: "That"),
+          ],
+        ),
+        ModelSimpleWizardStepQuestion(
+          id: "question_4",
+          text: "Question 4",
+          answers: [
+            ModelSimpleWizardStepAnswer(text: "This"),
+            ModelSimpleWizardStepAnswer(text: "That"),
+          ],
+        ),
+        ModelSimpleWizardStepQuestion(
+          id: "question_5",
+          text: "Question 5",
+          answers: [
+            ModelSimpleWizardStepAnswer(text: "This"),
+            ModelSimpleWizardStepAnswer(text: "That"),
+          ],
+        ),
+        ModelSimpleWizardStepQuestion(
+          id: "question_6",
+          text: "Question 6",
+          answers: [
+            ModelSimpleWizardStepAnswer(text: "This"),
+            ModelSimpleWizardStepAnswer(text: "That"),
+          ],
+        ),
+        ModelSimpleWizardFinish(
+          id: "finish",
+        )
       ]),
     );
   }

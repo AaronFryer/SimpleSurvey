@@ -1,24 +1,34 @@
-class ModelSimpleWizardStep {}
+class ModelSimpleWizardStep {
+  String id = "default_id";
+
+  ModelSimpleWizardStep({required this.id});
+}
 
 class ModelSimpleWizardStepQuestion extends ModelSimpleWizardStep {
   String text = "This is the question?";
   List<ModelSimpleWizardStepAnswer> answers = [];
 
   ModelSimpleWizardStepQuestion({
+    required this.text,
     required this.answers,
-  });
+    required id,
+  }) : super(id: id);
 }
 
 class ModelSimpleWizardFinish extends ModelSimpleWizardStep {
   String text = "This is the end";
 
-  // ModelSimpleWizardFinish({  });
+  ModelSimpleWizardFinish({
+    required id,
+  }) : super(id: id);
 }
 
 class ModelSimpleWizardStepAnswer {
-  String text = "ANSWER";
+  String text = "Default Answer";
+  String? skipToStep;
 
   ModelSimpleWizardStepAnswer({
     required this.text,
+    this.skipToStep,
   });
 }
