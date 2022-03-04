@@ -109,7 +109,22 @@ class _SimpleWizardQuestionViewState extends State<SimpleWizardQuestionView> {
                 ),
                 child: const Text("Next"),
                 onPressed: () {
-                  widget.instance.next();
+                  if (widget.step.isMult) {
+                    if (widget.step.answers
+                            .where((x) {
+                              return x.isSelected;
+                            })
+                            .toList()
+                            .length >=
+                        widget.step.multiMinimum) {
+                      widget.instance.next();
+                    } else {
+                      widget.instance.showError("You need to select at least " +
+                          widget.step.multiMinimum.toString());
+                    }
+                  } else {
+                    widget.instance.next();
+                  }
                 },
               ),
             ),
