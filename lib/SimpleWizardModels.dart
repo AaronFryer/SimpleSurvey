@@ -6,15 +6,11 @@ class ModelSimpleWizardStep {
 
 class ModelSimpleWizardStepQuestion extends ModelSimpleWizardStep {
   String text = "This is the question?";
-  List<ModelSimpleWizardStepAnswer> answers = [];
-  bool isMult;
-  int multiMinimum;
+  AnswerType answers;
 
   ModelSimpleWizardStepQuestion({
     required this.text,
     required this.answers,
-    this.isMult = false,
-    this.multiMinimum = 1,
     required id,
   }) : super(id: id);
 }
@@ -28,12 +24,43 @@ class ModelSimpleWizardFinish extends ModelSimpleWizardStep {
 }
 
 class ModelSimpleWizardStepAnswer {
-  String text = "Default Answer";
   String? skipToStep;
+  ModelSimpleWizardStepAnswer({
+    this.skipToStep,
+  });
+}
+
+class ModelSimpleWizardStepAnswerButton extends ModelSimpleWizardStepAnswer {
+  String text = "Default Answer";
+
   bool isSelected = false;
 
-  ModelSimpleWizardStepAnswer({
+  ModelSimpleWizardStepAnswerButton({
     required this.text,
-    this.skipToStep,
+    skipToStep,
+  }) : super(skipToStep: skipToStep);
+}
+
+class ModelSimpleWizardStepAnswerRange extends ModelSimpleWizardStepAnswer {
+  ModelSimpleWizardStepAnswerRange({
+    skipToStep,
+  }) : super(skipToStep: skipToStep);
+}
+
+class AnswerType {}
+
+class SingleChoiceAnswer extends AnswerType {
+  List<ModelSimpleWizardStepAnswerButton> choices;
+
+  SingleChoiceAnswer({required this.choices});
+}
+
+class MultipleChoiceAnswer extends AnswerType {
+  List<ModelSimpleWizardStepAnswerButton> choices;
+  int multiMinimum;
+
+  MultipleChoiceAnswer({
+    required this.choices,
+    this.multiMinimum = 1,
   });
 }

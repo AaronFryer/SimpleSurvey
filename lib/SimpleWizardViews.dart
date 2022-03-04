@@ -35,36 +35,58 @@ class _SimpleWizardQuestionViewState extends State<SimpleWizardQuestionView> {
                 style: const TextStyle(fontSize: 20),
               ),
             ),
-            ...widget.step.answers.map((ModelSimpleWizardStepAnswer answer) {
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: answer.isSelected ? Colors.blue : Colors.white,
-                    onPrimary: answer.isSelected ? Colors.white : Colors.blue,
-                    side: const BorderSide(
-                      color: Colors.blue,
+            if (widget.step.answers.runtimeType == SingleChoiceAnswer)
+              ...(widget.step.answers as SingleChoiceAnswer)
+                  .choices
+                  .map((ModelSimpleWizardStepAnswerButton answer) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      onPrimary: Colors.blue,
+                      side: const BorderSide(
+                        color: Colors.blue,
+                      ),
+                      minimumSize: const Size(300, 50),
+                      maximumSize: const Size(300, 50),
                     ),
-                    minimumSize: const Size(300, 50),
-                    maximumSize: const Size(300, 50),
-                  ),
-                  child: Text(answer.text),
-                  onPressed: () {
-                    if (!widget.step.isMult) {
+                    child: Text(answer.text),
+                    onPressed: () {
                       if (answer.skipToStep != null) {
                         widget.instance.goTo(answer.skipToStep!);
                       } else {
                         widget.instance.next();
                       }
-                    } else {
+                    },
+                  ),
+                );
+              })
+            else if (widget.step.answers.runtimeType == MultipleChoiceAnswer)
+              ...(widget.step.answers as MultipleChoiceAnswer)
+                  .choices
+                  .map((ModelSimpleWizardStepAnswerButton answer) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: answer.isSelected ? Colors.blue : Colors.white,
+                      onPrimary: answer.isSelected ? Colors.white : Colors.blue,
+                      side: const BorderSide(
+                        color: Colors.blue,
+                      ),
+                      minimumSize: const Size(300, 50),
+                      maximumSize: const Size(300, 50),
+                    ),
+                    child: Text(answer.text),
+                    onPressed: () {
                       setState(() {
                         answer.isSelected = !answer.isSelected;
                       });
-                    }
-                  },
-                ),
-              );
-            }),
+                    },
+                  ),
+                );
+              })
           ],
         ),
         Align(
@@ -96,7 +118,7 @@ class _SimpleWizardQuestionViewState extends State<SimpleWizardQuestionView> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 5, 5),
             child: Visibility(
-              visible: widget.step.isMult,
+              visible: widget.step.answers.runtimeType == MultipleChoiceAnswer,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
@@ -109,18 +131,22 @@ class _SimpleWizardQuestionViewState extends State<SimpleWizardQuestionView> {
                 ),
                 child: const Text("Next"),
                 onPressed: () {
-                  if (widget.step.isMult) {
-                    if (widget.step.answers
+                  if (widget.step.answers.runtimeType == MultipleChoiceAnswer) {
+                    if ((widget.step.answers as MultipleChoiceAnswer)
+                            .choices
                             .where((x) {
                               return x.isSelected;
                             })
                             .toList()
                             .length >=
-                        widget.step.multiMinimum) {
+                        (widget.step.answers as MultipleChoiceAnswer)
+                            .multiMinimum) {
                       widget.instance.next();
                     } else {
                       widget.instance.showError("You need to select at least " +
-                          widget.step.multiMinimum.toString());
+                          (widget.step.answers as MultipleChoiceAnswer)
+                              .multiMinimum
+                              .toString());
                     }
                   } else {
                     widget.instance.next();
