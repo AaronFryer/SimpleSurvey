@@ -22,7 +22,7 @@ class SimpleWizardState extends State<SimpleWizard> {
   bool showBack = true;
   List<int> previousSteps = [];
 
-  void Next() {
+  void next() {
     if (currentPage < widget.steps.length - 1) {
       previousSteps.add(currentPage);
       currentPage++;
@@ -30,7 +30,7 @@ class SimpleWizardState extends State<SimpleWizard> {
     }
   }
 
-  void Back() {
+  void back() {
     if (previousSteps.isNotEmpty) {
       int previousPage = previousSteps.removeLast();
       currentPage = previousPage;
@@ -40,7 +40,7 @@ class SimpleWizardState extends State<SimpleWizard> {
     }
   }
 
-  void GoTo(String step) {
+  void goTo(String step) {
     int index = widget.steps.indexWhere((element) => element.id == step);
     previousSteps.add(currentPage);
     currentPage = index;
@@ -53,21 +53,8 @@ class SimpleWizardState extends State<SimpleWizard> {
       duration: const Duration(milliseconds: 200),
       curve: Curves.ease,
     );
-  }
 
-  @override
-  void initState() {
-    controller.addListener(() {
-      // showBack = currentPage != widget.steps.length - 1; //no back on last page
-    });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
+    showBack = currentPage > 0;
   }
 
   @override

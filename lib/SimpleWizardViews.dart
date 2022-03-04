@@ -45,9 +45,9 @@ class SimpleWizardQuestionView extends StatelessWidget {
                   child: Text(answer.text),
                   onPressed: () {
                     if (answer.skipToStep != null) {
-                      instance.GoTo(answer.skipToStep!);
+                      instance.goTo(answer.skipToStep!);
                     } else {
-                      instance.Next();
+                      instance.next();
                     }
                   },
                 ),
@@ -56,9 +56,9 @@ class SimpleWizardQuestionView extends StatelessWidget {
           ],
         ),
         Align(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.bottomLeft,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.fromLTRB(5, 0, 0, 5),
             child: Visibility(
               visible: instance.showBack,
               child: ElevatedButton(
@@ -73,7 +73,7 @@ class SimpleWizardQuestionView extends StatelessWidget {
                 ),
                 child: const Text("Back"),
                 onPressed: () {
-                  instance.Back();
+                  instance.back();
                 },
               ),
             ),
@@ -123,8 +123,8 @@ class SimpleWizardFinishView extends StatelessWidget {
               ),
               child: const Text("Close"),
               onPressed: () {
+                instance.goTo("question_1");
                 instance.previousSteps.clear();
-                instance.GoTo("question_1");
               },
             ),
           ],
