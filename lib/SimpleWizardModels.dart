@@ -7,10 +7,12 @@ class ModelSimpleWizardStep {
 class ModelSimpleWizardStepQuestion extends ModelSimpleWizardStep {
   String text = "This is the question?";
   List<ModelSimpleWizardStepAnswer> answers = [];
+  bool isMult;
 
   ModelSimpleWizardStepQuestion({
     required this.text,
     required this.answers,
+    this.isMult = false,
     required id,
   }) : super(id: id);
 }
@@ -26,6 +28,7 @@ class ModelSimpleWizardFinish extends ModelSimpleWizardStep {
 class ModelSimpleWizardStepAnswer {
   String text = "Default Answer";
   String? skipToStep;
+  bool isSelected = false;
 
   ModelSimpleWizardStepAnswer({
     required this.text,

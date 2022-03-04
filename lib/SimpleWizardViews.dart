@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'SimpleWizard.dart';
 import 'SimpleWizardModels.dart';
 
-class SimpleWizardQuestionView extends StatelessWidget {
+class SimpleWizardQuestionView extends StatefulWidget {
   SimpleWizardQuestionView({
     required this.step,
     required this.instance,
@@ -12,6 +12,12 @@ class SimpleWizardQuestionView extends StatelessWidget {
   final SimpleWizardState instance;
   final ModelSimpleWizardStepQuestion step;
 
+  @override
+  State<SimpleWizardQuestionView> createState() =>
+      _SimpleWizardQuestionViewState();
+}
+
+class _SimpleWizardQuestionViewState extends State<SimpleWizardQuestionView> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -25,17 +31,17 @@ class SimpleWizardQuestionView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                step.text,
+                widget.step.text,
                 style: const TextStyle(fontSize: 20),
               ),
             ),
-            ...step.answers.map((ModelSimpleWizardStepAnswer answer) {
+            ...widget.step.answers.map((ModelSimpleWizardStepAnswer answer) {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    onPrimary: Colors.blue,
+                    primary: answer.isSelected ? Colors.blue : Colors.white,
+                    onPrimary: answer.isSelected ? Colors.white : Colors.blue,
                     side: const BorderSide(
                       color: Colors.blue,
                     ),
@@ -44,10 +50,16 @@ class SimpleWizardQuestionView extends StatelessWidget {
                   ),
                   child: Text(answer.text),
                   onPressed: () {
-                    if (answer.skipToStep != null) {
-                      instance.goTo(answer.skipToStep!);
+                    if (!widget.step.isMult) {
+                      if (answer.skipToStep != null) {
+                        widget.instance.goTo(answer.skipToStep!);
+                      } else {
+                        widget.instance.next();
+                      }
                     } else {
-                      instance.next();
+                      setState(() {
+                        answer.isSelected = !answer.isSelected;
+                      });
                     }
                   },
                 ),
@@ -60,7 +72,7 @@ class SimpleWizardQuestionView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(5, 0, 0, 5),
             child: Visibility(
-              visible: instance.showBack,
+              visible: widget.instance.showBack,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
@@ -73,7 +85,31 @@ class SimpleWizardQuestionView extends StatelessWidget {
                 ),
                 child: const Text("Back"),
                 onPressed: () {
-                  instance.back();
+                  widget.instance.back();
+                },
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 5, 5),
+            child: Visibility(
+              visible: widget.step.isMult,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  onPrimary: Colors.blue,
+                  side: const BorderSide(
+                    color: Colors.blue,
+                  ),
+                  minimumSize: const Size(75, 50),
+                  maximumSize: const Size(75, 50),
+                ),
+                child: const Text("Next"),
+                onPressed: () {
+                  widget.instance.next();
                 },
               ),
             ),

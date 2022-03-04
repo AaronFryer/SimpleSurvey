@@ -55,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ModelSimpleWizardStepQuestion(
           id: "question_2",
           text: "Question 2",
+          isMult: true,
           answers: [
             ModelSimpleWizardStepAnswer(text: "This"),
             ModelSimpleWizardStepAnswer(text: "That"),
