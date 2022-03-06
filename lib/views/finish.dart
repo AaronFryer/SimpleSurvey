@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../SimpleWizard.dart';
 import '../models/steps/finish.dart';
+import '../simple_survey.dart';
 
-class SimpleWizardFinishView extends StatelessWidget {
-  SimpleWizardFinishView({
+class SimpleSurveyFinishView extends StatelessWidget {
+  SimpleSurveyFinishView({
     required this.step,
     required this.instance,
     Key? key,
   }) : super(key: key);
 
-  final SimpleWizardState instance;
+  final SimpleSurveyState instance;
   final Finish step;
 
   @override

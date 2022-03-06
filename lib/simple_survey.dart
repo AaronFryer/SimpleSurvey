@@ -1,3 +1,5 @@
+library simple_survey;
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -6,22 +8,28 @@ import 'models/steps/finish.dart';
 import 'models/steps/question.dart';
 import 'views/finish.dart';
 import 'views/question.dart';
+export 'models/steps/question.dart';
+export 'models/steps/finish.dart';
+export 'models/answer.dart';
+export 'models/answertypes/multichoice.dart';
+export 'models/answertypes/range.dart';
+export 'models/answertypes/singlechoice.dart';
 
-class SimpleWizard extends StatefulWidget {
-  const SimpleWizard({
+class SimpleSurvey extends StatefulWidget {
+  const SimpleSurvey({
     required this.steps,
     required this.onComplete,
     Key? key,
   }) : super(key: key);
 
-  final List<ModelSimpleWizardStep> steps;
+  final List<ModelSimpleSurveyStep> steps;
   final VoidCallback onComplete;
 
   @override
-  State<SimpleWizard> createState() => SimpleWizardState();
+  State<SimpleSurvey> createState() => SimpleSurveyState();
 }
 
-class SimpleWizardState extends State<SimpleWizard> {
+class SimpleSurveyState extends State<SimpleSurvey> {
   final PageController controller = PageController();
 
   int currentPage = 0;
@@ -114,14 +122,14 @@ class SimpleWizardState extends State<SimpleWizard> {
           physics: const NeverScrollableScrollPhysics(),
           controller: controller,
           children: <Widget>[
-            ...widget.steps.map((ModelSimpleWizardStep step) {
+            ...widget.steps.map((ModelSimpleSurveyStep step) {
               if (step.runtimeType == Question) {
-                return SimpleWizardQuestionView(
+                return SimpleSurveyQuestionView(
                   step: step as Question,
                   instance: this,
                 );
               } else if (step.runtimeType == Finish) {
-                return SimpleWizardFinishView(
+                return SimpleSurveyFinishView(
                   step: step as Finish,
                   instance: this,
                 );

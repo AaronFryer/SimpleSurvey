@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 
-import '../SimpleWizard.dart';
 import '../models/answertypes/multichoice.dart';
 import '../models/answertypes/range.dart';
 import '../models/answertypes/singlechoice.dart';
 import '../models/steps/question.dart';
+import '../simple_survey.dart';
 import 'choices/multichoice.dart';
 import 'choices/rangechoice.dart';
 import 'choices/singlechoice.dart';
 import 'choices/textchoice.dart';
 
-class SimpleWizardQuestionView extends StatefulWidget {
-  const SimpleWizardQuestionView({
+class SimpleSurveyQuestionView extends StatefulWidget {
+  const SimpleSurveyQuestionView({
     required this.step,
     required this.instance,
     Key? key,
   }) : super(key: key);
 
-  final SimpleWizardState instance;
+  final SimpleSurveyState instance;
   final Question step;
 
   @override
-  State<SimpleWizardQuestionView> createState() =>
-      _SimpleWizardQuestionViewState();
+  State<SimpleSurveyQuestionView> createState() =>
+      _SimpleSurveyQuestionViewState();
 }
 
-class _SimpleWizardQuestionViewState extends State<SimpleWizardQuestionView> {
+class _SimpleSurveyQuestionViewState extends State<SimpleSurveyQuestionView> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -103,7 +103,7 @@ class btnNext extends StatelessWidget {
     required this.widget,
   }) : super(key: key);
 
-  final SimpleWizardQuestionView widget;
+  final SimpleSurveyQuestionView widget;
 
   @override
   Widget build(BuildContext context) {

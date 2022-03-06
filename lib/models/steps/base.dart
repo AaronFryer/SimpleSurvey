@@ -1,5 +1,5 @@
-class ModelSimpleWizardStep {
+class ModelSimpleSurveyStep {
   String id = "default_id";
 
-  ModelSimpleWizardStep({required this.id});
+  ModelSimpleSurveyStep({required this.id});
 }

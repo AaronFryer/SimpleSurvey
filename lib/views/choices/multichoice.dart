@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../SimpleWizard.dart';
+import '../../simple_survey.dart';
 import '../../models/answer.dart';
 import '../../models/answertypes/multichoice.dart';
 import '../../models/steps/question.dart';
@@ -12,7 +12,7 @@ class MultiChoice extends StatefulWidget {
   }) : super(key: key);
 
   final Question step;
-  final SimpleWizardState instance;
+  final SimpleSurveyState instance;
 
   @override
   State<MultiChoice> createState() => _MultiChoiceState();

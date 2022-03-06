@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../SimpleWizard.dart';
+import '../../simple_survey.dart';
 import '../../models/steps/base.dart';
 
 class RangeChoice extends StatefulWidget {
-  final SimpleWizardState instance;
-  final ModelSimpleWizardStep step;
+  final SimpleSurveyState instance;
+  final ModelSimpleSurveyStep step;
 
   const RangeChoice({
     required this.instance,

@@ -1,6 +1,6 @@
 import 'base.dart';
 
-class Finish extends ModelSimpleWizardStep {
+class Finish extends ModelSimpleSurveyStep {
   String text = "This is the end";
 
   Finish({
