@@ -43,6 +43,14 @@ class _SimpleSurveyQuestionViewState extends State<SimpleSurveyQuestionView> {
                 style: const TextStyle(fontSize: 20),
               ),
             ),
+            if (widget.step.subtext != null)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.step.subtext!,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
             if (widget.step.type.runtimeType == SingleChoiceAnswer)
               SingleChoice(
                 step: widget.step,
@@ -58,7 +66,7 @@ class _SimpleSurveyQuestionViewState extends State<SimpleSurveyQuestionView> {
                 instance: widget.instance,
                 step: widget.step,
               )
-            else if (widget.step.type.runtimeType == TextChoice)
+            else if (widget.step.type.runtimeType == TextAnswer)
               TextChoice(
                 instance: widget.instance,
                 step: widget.step,
@@ -113,7 +121,8 @@ class btnNext extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(0, 0, 5, 5),
         child: Visibility(
           visible: widget.step.type.runtimeType == MultipleChoiceAnswer ||
-              widget.step.type.runtimeType == RangeAnswer,
+              widget.step.type.runtimeType == RangeAnswer ||
+              widget.step.type.runtimeType == TextAnswer,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.white,
@@ -141,14 +150,16 @@ class btnNext extends StatelessWidget {
                           .choices
                           .toString());
                   widget.instance.next();
-                } else if (widget.step.type.runtimeType == RangeAnswer) {
-                  widget.instance.next();
                 } else {
                   widget.instance.showError("You need to select at least " +
                       (widget.step.type as MultipleChoiceAnswer)
                           .multiMinimum
                           .toString());
                 }
+              } else if (widget.step.type.runtimeType == RangeAnswer) {
+                widget.instance.next();
+              } else if (widget.step.type.runtimeType == TextAnswer) {
+                widget.instance.next();
               } else {
                 widget.instance.next();
               }

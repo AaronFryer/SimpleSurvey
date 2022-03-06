@@ -21,16 +21,9 @@ class _TextChoiceState extends State<TextChoice> {
 
   @override
   Widget build(BuildContext context) {
-    return Slider(
-      min: 0,
-      max: 10,
-      value: value,
-      onChanged: (double v) {
-        setState(() {
-          value = v;
-          widget.instance.setData(widget.step.id, v.toString());
-        });
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: const TextField(),
     );
   }
 }

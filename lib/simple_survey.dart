@@ -13,6 +13,7 @@ export 'models/steps/finish.dart';
 export 'models/answer.dart';
 export 'models/answertypes/multichoice.dart';
 export 'models/answertypes/range.dart';
+export 'models/answertypes/text.dart';
 export 'models/answertypes/singlechoice.dart';
 
 class SimpleSurvey extends StatefulWidget {
