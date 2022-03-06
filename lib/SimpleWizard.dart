@@ -1,17 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
-import 'SimpleWizardModels.dart';
-import 'SimpleWizardViews.dart';
+import 'models/steps/base.dart';
+import 'models/steps/finish.dart';
+import 'models/steps/question.dart';
+import 'views/finish.dart';
+import 'views/question.dart';
 
 class SimpleWizard extends StatefulWidget {
   const SimpleWizard({
     required this.steps,
+    required this.onComplete,
     Key? key,
   }) : super(key: key);
 
   final List<ModelSimpleWizardStep> steps;
+  final VoidCallback onComplete;
 
   @override
   State<SimpleWizard> createState() => SimpleWizardState();
@@ -25,6 +29,11 @@ class SimpleWizardState extends State<SimpleWizard> {
   List<int> previousSteps = [];
   String? errorMessage;
   Timer? errorTimer;
+  Map<String, String> data = {};
+
+  void setData(key, value) {
+    data[key] = value;
+  }
 
   void showError(msg) {
     setState(() {
@@ -72,6 +81,10 @@ class SimpleWizardState extends State<SimpleWizard> {
     );
 
     showBack = currentPage > 0;
+
+    if (widget.steps[currentPage].runtimeType == Finish) {
+      widget.onComplete();
+    }
   }
 
   @override
@@ -102,14 +115,14 @@ class SimpleWizardState extends State<SimpleWizard> {
           controller: controller,
           children: <Widget>[
             ...widget.steps.map((ModelSimpleWizardStep step) {
-              if (step.runtimeType == ModelSimpleWizardStepQuestion) {
+              if (step.runtimeType == Question) {
                 return SimpleWizardQuestionView(
-                  step: step as ModelSimpleWizardStepQuestion,
+                  step: step as Question,
                   instance: this,
                 );
-              } else if (step.runtimeType == ModelSimpleWizardFinish) {
+              } else if (step.runtimeType == Finish) {
                 return SimpleWizardFinishView(
-                  step: step as ModelSimpleWizardFinish,
+                  step: step as Finish,
                   instance: this,
                 );
               } else {

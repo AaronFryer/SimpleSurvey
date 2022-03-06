@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:simple_wizard/SimpleWizard.dart';
 
-import 'SimpleWizardModels.dart';
+import 'models/answer.dart';
+import 'models/answertypes/multichoice.dart';
+import 'models/answertypes/range.dart';
+import 'models/answertypes/singlechoice.dart';
+import 'models/steps/finish.dart';
+import 'models/steps/question.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,71 +44,57 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: SimpleWizard(steps: [
-        ModelSimpleWizardStepQuestion(
-          id: "question_1",
-          text: "Question 1",
-          answers: SingleChoiceAnswer(
-            choices: [
-              ModelSimpleWizardStepAnswerButton(text: "This"),
-              ModelSimpleWizardStepAnswerButton(text: "That"),
-              ModelSimpleWizardStepAnswerButton(
-                text: "Skip to 3",
-                skipToStep: "question_3",
-              ),
-            ],
+      body: SimpleWizard(
+        steps: [
+          Question(
+            id: "question_1",
+            text: "Question 1",
+            type: SingleChoiceAnswer(
+              choices: [
+                Answer(text: "This"),
+                Answer(text: "That"),
+                Answer(
+                  text: "Skip to 3",
+                  skipToStep: "question_3",
+                ),
+              ],
+            ),
           ),
-        ),
-        ModelSimpleWizardStepQuestion(
-          id: "question_2",
-          text: "Question 2",
-          answers: MultipleChoiceAnswer(
-            multiMinimum: 2,
-            choices: [
-              ModelSimpleWizardStepAnswerButton(text: "This"),
-              ModelSimpleWizardStepAnswerButton(text: "That"),
-            ],
+          Question(
+            id: "question_2",
+            text: "Question 2",
+            type: MultipleChoiceAnswer(
+              multiMinimum: 2,
+              choices: [
+                Answer(text: "This"),
+                Answer(text: "That"),
+              ],
+            ),
           ),
-        ),
-        ModelSimpleWizardStepQuestion(
-          id: "question_3",
-          text: "Question 3",
-          answers: SingleChoiceAnswer(
-            choices: [
-              ModelSimpleWizardStepAnswerButton(text: "This"),
-              ModelSimpleWizardStepAnswerButton(text: "That"),
-              ModelSimpleWizardStepAnswerButton(text: "Other"),
-            ],
+          Question(
+            id: "question_3",
+            text: "Question 3",
+            type: SingleChoiceAnswer(
+              choices: [
+                Answer(text: "This"),
+                Answer(text: "That"),
+                Answer(text: "Other"),
+              ],
+            ),
           ),
-        ),
-        // ModelSimpleWizardStepQuestion(
-        //   id: "question_4",
-        //   text: "Question 4",
-        //   answers: [
-        //     ModelSimpleWizardStepAnswerButton(text: "This"),
-        //     ModelSimpleWizardStepAnswerButton(text: "That"),
-        //   ],
-        // ),
-        // ModelSimpleWizardStepQuestion(
-        //   id: "question_5",
-        //   text: "Question 5",
-        //   answers: [
-        //     ModelSimpleWizardStepAnswerButton(text: "This"),
-        //     ModelSimpleWizardStepAnswerButton(text: "That"),
-        //   ],
-        // ),
-        // ModelSimpleWizardStepQuestion(
-        //   id: "question_6",
-        //   text: "Question 6",
-        //   answers: [
-        //     ModelSimpleWizardStepAnswerButton(text: "This"),
-        //     ModelSimpleWizardStepAnswerButton(text: "That"),
-        //   ],
-        // ),
-        ModelSimpleWizardFinish(
-          id: "finish",
-        )
-      ]),
+          Question(
+            id: "question_4",
+            text: "Question 4",
+            type: RangeAnswer(),
+          ),
+          Finish(
+            id: "finish",
+          )
+        ],
+        onComplete: () {
+          print("Done");
+        },
+      ),
     );
   }
 }
